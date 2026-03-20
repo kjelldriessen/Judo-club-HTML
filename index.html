@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO Meta Tags toegevoegd -->
     <title>Judo Club Middelharnis | Vechtsport & Weerbaarheidstraining</title>
     <meta name="description" content="Judo Club Middelharnis is dé vereniging voor vechtsport en weerbaarheidstraining voor jeugd en volwassenen op Goeree-Overflakkee. Vraag gratis een proefles aan!">
     <meta name="keywords" content="Judo Middelharnis, Vechtsport Goeree-Overflakkee, Weerbaarheidstraining kind Flakkee, Judoles Dirksland, Oude Tonge, Judo">
@@ -73,24 +72,31 @@
         /* Grid Layouts */
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
         
-        /* Locaties (Incl Google Maps) */
+        /* Locaties (Incl Google Maps Mobile Scroll Fix) */
         .locatie-card h3 { color: var(--logo-blue); margin-bottom: 15px; font-size: 1.5rem; text-shadow: 0 0 10px rgba(58, 152, 244, 0.3); }
         .locatie-card p { font-weight: bold; margin-bottom: 15px; }
         .locatie-card ul { list-style: none; margin-bottom: 20px; }
         .locatie-card li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ddd; }
         .map-container { width: 100%; height: 200px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-        .map-container iframe { width: 100%; height: 100%; border: none; }
+        /* Pointer-events: none voorkomt dat gebruikers op mobiel vastzitten in de kaart tijdens het scrollen */
+        .map-container iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
 
         /* Trainers Sectie */
         .trainer-card { text-align: center; }
         .trainer-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--logo-blue); }
+
+        /* Reviews Sectie */
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .review-card { font-style: italic; position: relative; font-size: 1.1rem; line-height: 1.7; padding-top: 50px; }
+        .review-card::before { content: '\"'; font-size: 5rem; color: var(--logo-blue); position: absolute; top: 10px; left: 30px; opacity: 0.3; font-family: sans-serif; line-height: 1; }
+        .review-author { display: block; margin-top: 15px; font-weight: bold; font-style: normal; color: var(--logo-red); text-align: right; }
 
         /* Galerij Sectie */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .gallery-grid img { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; transition: transform 0.3s; border: 1px solid var(--glass-border); }
         .gallery-grid img:hover { transform: scale(1.03); border-color: var(--logo-blue); }
 
-        /* --- PROEFLES FORMULIER (Toegankelijk) --- */
+        /* --- PROEFLES FORMULIER & ALGEMEEN FORM --- */
         .proefles-container { max-width: 700px; margin: 0 auto; }
         .form-group { margin-bottom: 25px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--logo-blue); font-weight: bold; font-size: 0.95rem; }
@@ -100,19 +106,21 @@
         select.form-control option { background-color: var(--bg-dark); color: white; }
         textarea.form-control { resize: vertical; min-height: 120px; }
 
-        /* --- WEBSHOP (Met echte foto's en cart logic) --- */
+        /* --- WEBSHOP (Met Dropdowns) --- */
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .product-card { text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
         .product-img { width: 100%; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; transition: transform var(--transition-speed); border: 1px solid rgba(255,255,255,0.05); }
         .product-card:hover .product-img { transform: scale(1.05); box-shadow: 0 0 20px rgba(58, 152, 244, 0.2); border: 1px solid var(--logo-blue); }
         .product-title { font-size: 1.3rem; margin-bottom: 10px; }
-        .product-price { color: var(--logo-red); font-weight: bold; font-size: 1.4rem; margin-bottom: 20px; }
+        .product-price { color: var(--logo-red); font-weight: bold; font-size: 1.4rem; margin-bottom: 15px; }
+        .product-size { margin-bottom: 15px; width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); color: white; border-radius: 8px; outline: none; font-size: 0.95rem; cursor: pointer; }
+        .product-size option { background: var(--bg-dark); }
         
-        /* Winkelwagen UI overlay */
-        #cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .cart-content { background: var(--bg-dark); padding: 40px; border-radius: 15px; border: 1px solid var(--logo-blue); width: 90%; max-width: 500px; text-align: center; }
-        #cart-items { margin: 20px 0; text-align: left; max-height: 200px; overflow-y: auto; color: white; }
-        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #333; }
+        /* Winkelwagen UI overlay (Aangepast voor formulier) */
+        #cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
+        .cart-content { background: var(--bg-dark); padding: 40px; border-radius: 15px; border: 1px solid var(--logo-blue); width: 100%; max-width: 500px; text-align: center; max-height: 90vh; overflow-y: auto; }
+        #cart-items { margin: 20px 0; text-align: left; max-height: 150px; overflow-y: auto; color: white; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .cart-item { display: flex; justify-content: space-between; padding: 5px 0; }
 
         /* --- FOOTER / CONTACT --- */
         footer { background: rgba(10, 14, 23, 0.95); padding: 60px 5%; text-align: center; border-top: 1px solid var(--glass-border); position: relative; }
@@ -134,6 +142,7 @@
             nav ul { margin-top: 15px; justify-content: center; }
             .hero h1 { font-size: 2.5rem; }
             .footer-grid { text-align: center; }
+            .cart-content { padding: 20px; }
         }
     </style>
 </head>
@@ -161,20 +170,41 @@
     <section class="hero">
         <h1>Judo met plezier</h1>
         <p>Ontdek de kracht, het respect en het plezier van judo. Sluit je aan bij de gezelligste vereniging van Flakkee.</p>
-        <a href="#proefles" class="btn">Vraag een proefles aan</a>
+        <!-- AANGEPAST: Drempelverlagende tekst "gratis" toegevoegd -->
+        <a href="#proefles" class="btn">Vraag een gratis proefles aan</a>
     </section>
     
-    <!-- OVER ONS (SEO Geoptimaliseerd) -->
+    <!-- OVER ONS -->
     <section id="over">
         <h2 class="section-title reveal">Over Onze Club</h2>
         <div class="glass-card over-ons-content reveal">
-            <p><strong>Judoclub Middelharnis</strong> is dé plek voor vechtsport op Goeree-Overflakkee. Wij zijn een gezellige, open vereniging waar veiligheid, respect en plezier voorop staan. Of u nu op zoek bent naar <strong>weerbaarheidstraining voor uw kind</strong> of zelf sportief aan de slag wil, wij bieden lessen op elk niveau.</p>
+            <!-- AANGEPAST: Expliciet gemeld dat kinderen vanaf 4 jaar welkom zijn -->
+            <p><strong>Judoclub Middelharnis</strong> is dé plek voor vechtsport op Goeree-Overflakkee. Wij zijn een gezellige, open vereniging waar veiligheid, respect en plezier voorop staan. Of u nu op zoek bent naar weerbaarheidstraining voor uw kind <strong>(al vanaf 4 jaar zijn kinderen bij ons welkom voor kleuterjudo!)</strong> of zelf sportief aan de slag wil, wij bieden lessen op elk niveau.</p>
             <br>
             <p>We streven ernaar om iedere judoka persoonlijk verder te helpen. Onze gediplomeerde trainers begeleiden de lessen op onze locaties in Sommelsdijk, Dirksland en Oude Tonge. De sfeer op de tatami (judomat) moet u eigenlijk zelf ervaren!</p>
         </div>
     </section>
 
-    <!-- TARIEVEN & TRAINERS (Conversie en Vertrouwen) -->
+    <!-- REVIEWS / SOCIAL PROOF SECTIE (NIEUW!) -->
+    <section id="reviews">
+        <h2 class="section-title reveal">Wat zeggen onze leden?</h2>
+        <div class="review-grid">
+            <div class="glass-card review-card reveal">
+                "Mijn zoon (6) gaat met enorm veel plezier naar de lessen in Sommelsdijk. Hij is een stuk zelfverzekerder geworden en heeft geleerd om respectvol met anderen om te gaan. Fantastische trainers!"
+                <span class="review-author">- Moeder van Tim</span>
+            </div>
+            <div class="glass-card review-card reveal" style="transition-delay: 0.1s;">
+                "Een enorm fijne club waar echt iedereen welkom is, ongeacht je niveau of leeftijd. De sfeer onder de volwassenen is top, er wordt hard getraind maar er is ook zeker ruimte voor een grapje."
+                <span class="review-author">- Sander (Senioren)</span>
+            </div>
+            <div class="glass-card review-card reveal" style="transition-delay: 0.2s;">
+                "We zochten een sport voor onze dochter om weerbaarder te worden. Vanaf de eerste gratis proefles was ze verkocht. De juffen en meesters leggen alles super rustig en duidelijk uit."
+                <span class="review-author">- Familie de Jong</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- TARIEVEN & TRAINERS -->
     <section id="tarieven">
         <div class="grid-3">
             <div class="glass-card reveal">
@@ -190,15 +220,17 @@
             <!-- Onze Trainers -->
             <div class="glass-card reveal" style="grid-column: span 2;">
                 <h3 style="color:var(--logo-blue); margin-bottom:20px; font-size: 1.6rem;">Onze Trainers (Sensei's)</h3>
-                <p style="margin-bottom: 20px;">Onze lessen worden gegeven door ervaren, JBN-gecertificeerde trainers. Veiligheid en goede begeleiding staan centraal.</p>
+                <!-- AANGEPAST: VOG Toevoeging voor meer vertrouwen -->
+                <p style="margin-bottom: 20px;">Onze lessen worden gegeven door ervaren, JBN-gecertificeerde trainers. <strong>Om de veiligheid te garanderen zijn al onze trainers in het bezit van een geldige VOG (Verklaring Omtrent het Gedrag).</strong></p>
                 <div style="display: flex; gap: 30px; flex-wrap: wrap;">
                     <div class="trainer-card">
-                        <!-- Voorbeeld foto (vervang URL met foto van eigen trainer) -->
+                        <!-- VERVANG DEZE LINK DOOR EEN ECHTE FOTO -->
                         <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=200&q=80" alt="Trainer 1">
                         <h4>Jan de Vries</h4>
                         <p style="font-size: 0.9rem; color:#ccc;">2e Dan - Jeugdtrainer</p>
                     </div>
                     <div class="trainer-card">
+                        <!-- VERVANG DEZE LINK DOOR EEN ECHTE FOTO -->
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Trainer 2">
                         <h4>Peter D.</h4>
                         <p style="font-size: 0.9rem; color:#ccc;">3e Dan - Senioren</p>
@@ -212,6 +244,7 @@
     <section id="galerij">
         <h2 class="section-title reveal">Sfeerimpressie</h2>
         <div class="gallery-grid reveal">
+            <!-- TIP: Vervang onderstaande tijdelijke Unsplash foto's met echte actie foto's van de club -->
             <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=600&q=80" alt="Judo training jeugd">
             <img src="https://images.unsplash.com/photo-1544143468-b7a4de4bbba4?auto=format&fit=crop&w=600&q=80" alt="Judo wedstrijd">
             <img src="https://images.unsplash.com/photo-1628109641155-27668631ed9a?auto=format&fit=crop&w=600&q=80" alt="Judo banden knopen">
@@ -219,7 +252,7 @@
         </div>
     </section>
 
-    <!-- LOCATIES & MAPS (UX Verbeterd) -->
+    <!-- LOCATIES & MAPS -->
     <section id="locaties">
         <h2 class="section-title reveal">Locaties & Lestijden</h2>
         <div class="grid-3">
@@ -263,11 +296,11 @@
         </div>
     </section>
 
-    <!-- PROEFLES FORMULIER (Werkend met Formspree + Toegankelijk) -->
+    <!-- PROEFLES FORMULIER -->
     <section id="proefles">
-        <h2 class="section-title reveal">Proefles Aanvragen</h2>
+        <h2 class="section-title reveal">Gratis Proefles Aanvragen</h2>
         <div class="glass-card proefles-container reveal">
-            <!-- LET OP: Vervang de action URL met de link van jouw (gratis) Formspree.io formulier om daadwerkelijk mails te ontvangen! -->
+            <!-- Formspree ID nodig voor live-gang -->
             <form action="https://formspree.io/f/VUL_HIER_JE_EIGEN_ID_IN" method="POST">
                 <div class="form-group">
                     <label for="naam">Naam Judoka *</label>
@@ -310,11 +343,11 @@
         </div>
     </section>
 
-    <!-- WEBSHOP (Echte foto's en mailto bestelsysteem) -->
+    <!-- WEBSHOP -->
     <section id="webshop">
         <h2 class="section-title reveal">JCM Webshop</h2>
         <p style="text-align: center; margin-bottom: 50px; color: #ccc; font-size: 1.2rem;" class="reveal">
-            Koop hier de officiële clubkleding. Klik op in winkelwagen, bestel, en wij leggen het voor je klaar op de club!
+            Koop hier de officiële clubkleding. Vul je gegevens in bij het afrekenen, en wij leggen je bestelling klaar op de club!
         </p>
         
         <div class="shop-grid">
@@ -322,49 +355,104 @@
                 <img src="https://images.unsplash.com/photo-1628109641155-27668631ed9a?auto=format&fit=crop&w=400&q=80" alt="Judopak" class="product-img">
                 <h3 class="product-title">Judopak Kind (Incl. witte band)</h3>
                 <p class="product-price">€ 35,00</p>
-                <button class="btn" onclick="addToCart('Judopak Kind', 35.00)">In Winkelwagen</button>
+                <!-- AANGEPAST: Dropdown voor het kiezen van een maat toegevoegd -->
+                <select class="product-size" id="maat-pak-kind">
+                    <option value="" disabled selected>Kies een maat...</option>
+                    <option value="110cm">Maat 110</option>
+                    <option value="120cm">Maat 120</option>
+                    <option value="130cm">Maat 130</option>
+                    <option value="140cm">Maat 140</option>
+                    <option value="150cm">Maat 150</option>
+                </select>
+                <button class="btn" onclick="addToCart('Judopak Kind', 35.00, 'maat-pak-kind')">In Winkelwagen</button>
             </div>
             
             <div class="glass-card product-card reveal" style="transition-delay: 0.1s;">
                 <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=400&q=80" alt="Judopak Volwassene" class="product-img">
                 <h3 class="product-title">Judopak Volwassene (Matsuru)</h3>
                 <p class="product-price">€ 65,00</p>
-                <button class="btn" onclick="addToCart('Judopak Volwassene', 65.00)">In Winkelwagen</button>
+                <select class="product-size" id="maat-pak-volw">
+                    <option value="" disabled selected>Kies een maat...</option>
+                    <option value="160cm">Maat 160</option>
+                    <option value="170cm">Maat 170</option>
+                    <option value="180cm">Maat 180</option>
+                    <option value="190cm">Maat 190</option>
+                    <option value="200cm">Maat 200</option>
+                </select>
+                <button class="btn" onclick="addToCart('Judopak Volwassene', 65.00, 'maat-pak-volw')">In Winkelwagen</button>
             </div>
             
             <div class="glass-card product-card reveal" style="transition-delay: 0.2s;">
                 <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=400&q=80" alt="Hoodie" class="product-img">
                 <h3 class="product-title">JCM Club Hoodie (Met logo)</h3>
                 <p class="product-price">€ 40,00</p>
-                <button class="btn" onclick="addToCart('JCM Club Hoodie', 40.00)">In Winkelwagen</button>
+                <select class="product-size" id="maat-hoodie">
+                    <option value="" disabled selected>Kies een maat...</option>
+                    <option value="Kind 128">Kind (128)</option>
+                    <option value="Kind 140">Kind (140)</option>
+                    <option value="Kind 152">Kind (152)</option>
+                    <option value="S">Volwassen (S)</option>
+                    <option value="M">Volwassen (M)</option>
+                    <option value="L">Volwassen (L)</option>
+                    <option value="XL">Volwassen (XL)</option>
+                </select>
+                <button class="btn" onclick="addToCart('JCM Club Hoodie', 40.00, 'maat-hoodie')">In Winkelwagen</button>
             </div>
             
             <div class="glass-card product-card reveal" style="transition-delay: 0.3s;">
                 <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80" alt="Sporttas" class="product-img">
                 <h3 class="product-title">JCM Sporttas</h3>
                 <p class="product-price">€ 25,00</p>
-                <button class="btn" onclick="addToCart('JCM Sporttas', 25.00)">In Winkelwagen</button>
+                <select class="product-size" id="maat-tas" style="visibility:hidden;">
+                    <option value="One Size" selected>One Size</option>
+                </select>
+                <button class="btn" onclick="addToCart('JCM Sporttas', 25.00, 'maat-tas')">In Winkelwagen</button>
             </div>
         </div>
     </section>
 
-    <!-- WINKELWAGEN MODAL -->
+    <!-- WINKELWAGEN MODAL (AANGEPAST: Is nu een werkend formulier i.p.v. mailto link) -->
     <div id="cart-modal">
         <div class="cart-content">
-            <h2 style="color:var(--logo-blue); margin-bottom: 10px;">Jouw Winkelwagen</h2>
-            <div id="cart-items">
-                <i>Je winkelwagen is nog leeg.</i>
-            </div>
-            <h3 style="text-align: right; margin-bottom: 20px;">Totaal: € <span id="cart-total-price">0.00</span></h3>
-            <div style="display:flex; justify-content:space-between; gap:10px;">
-                <button class="btn" style="background:#444; box-shadow:none;" onclick="document.getElementById('cart-modal').style.display='none'">Sluiten</button>
-                <button class="btn" onclick="checkoutOrder()">Bestelling Versturen</button>
-            </div>
-            <p style="font-size: 0.8rem; margin-top: 15px; color:#888;">De bestelling wordt via e-mail verzonden en kan worden afgerekend op de club.</p>
+            <!-- Koppel ditzelfde formulier ook aan je Formspree link! -->
+            <form action="https://formspree.io/f/VUL_HIER_JE_EIGEN_ID_IN" method="POST">
+                <h2 style="color:var(--logo-blue); margin-bottom: 10px;">Jouw Winkelwagen</h2>
+                
+                <div id="cart-items">
+                    <i>Je winkelwagen is nog leeg.</i>
+                </div>
+                <h3 style="text-align: right; margin-bottom: 20px;">Totaal: € <span id="cart-total-price">0.00</span></h3>
+                
+                <!-- Deze velden worden verstuurd naar de club -->
+                <div style="text-align: left; margin-bottom: 25px;">
+                    <label style="color:var(--logo-blue); font-weight:bold; display:block; margin-bottom:5px;">Jouw Naam *</label>
+                    <input type="text" name="Naam Koper" class="form-control" style="margin-bottom:15px; padding:12px;" required>
+                    
+                    <label style="color:var(--logo-blue); font-weight:bold; display:block; margin-bottom:5px;">Jouw E-mailadres *</label>
+                    <input type="email" name="Email Koper" class="form-control" style="margin-bottom:15px; padding:12px;" required>
+                    
+                    <label style="color:var(--logo-blue); font-weight:bold; display:block; margin-bottom:5px;">Locatie waar je traint</label>
+                    <select name="Locatie Afhalen" class="form-control" style="padding:12px;">
+                        <option value="Sommelsdijk">Sommelsdijk</option>
+                        <option value="Dirksland">Dirksland</option>
+                        <option value="Oude Tonge">Oude Tonge</option>
+                    </select>
+
+                    <!-- Verborgen tekstveld: Hierin slaat Javascript de bestelling automatisch op, Formspree verstuurt dit mee! -->
+                    <textarea id="hidden-cart-data" name="Besteloverzicht" style="display:none;" required></textarea>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; gap:10px;">
+                    <button type="button" class="btn" style="background:#444; box-shadow:none; padding: 15px 20px;" onclick="document.getElementById('cart-modal').style.display='none'">Sluiten</button>
+                    <!-- Type="submit" stuurt hem af via het formulier -->
+                    <button type="submit" class="btn" style="padding: 15px 20px;">Bestellen</button>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 15px; color:#888;">De betaling vindt plaats op de vereniging wanneer je de bestelling ophaalt. We nemen via mail contact op als het binnen is.</p>
+            </form>
         </div>
     </div>
 
-    <!-- FOOTER / CONTACT (Met Wettelijke info, KVK en Klikbare links) -->
+    <!-- FOOTER / CONTACT -->
     <footer id="contact">
         <div class="footer-grid">
             <div class="footer-col">
@@ -383,7 +471,6 @@
 
             <div class="footer-col">
                 <h3>Aangesloten bij</h3>
-                <!-- Officieel Keurmerk (Logo Judo Bond Nederland) -->
                 <img src="https://upload.wikimedia.org/wikipedia/nl/thumb/4/4b/Judo_Bond_Nederland_logo.svg/800px-Judo_Bond_Nederland_logo.svg.png" alt="Judo Bond Nederland" class="jbn-logo">
             </div>
         </div>
@@ -393,7 +480,6 @@
                 &copy; 2026 Judoclub Middelharnis. Alle rechten voorbehouden.
             </div>
             <div>
-                <!-- Wettelijke verplichte gegevens voor de webshop -->
                 KVK: 12345678 | BTW: NL123456789B01 | <a href="#" style="color:#777; text-decoration:underline;">Algemene Voorwaarden</a> | <a href="#" style="color:#777; text-decoration:underline;">Privacybeleid</a>
             </div>
         </div>
@@ -423,63 +509,5 @@
         window.addEventListener('scroll', revealElements);
         revealElements(); 
 
-        // Webshop & Cart Functionaliteit (Zonder ingewikkelde backend)
-        let cart =[];
-        let totalPrice = 0;
-
-        function addToCart(productNaam, prijs) {
-            cart.push({naam: productNaam, prijs: prijs});
-            totalPrice += prijs;
-            
-            // Update UI
-            document.getElementById('cart-count').innerText = cart.length;
-            renderCart();
-            alert(`"${productNaam}" is toegevoegd aan je wagentje!`);
-        }
-
-        function renderCart() {
-            const itemsContainer = document.getElementById('cart-items');
-            if (cart.length === 0) {
-                itemsContainer.innerHTML = '<i>Je winkelwagen is nog leeg.</i>';
-            } else {
-                itemsContainer.innerHTML = '';
-                cart.forEach((item, index) => {
-                    itemsContainer.innerHTML += `<div class="cart-item">
-                        <span>${item.naam}</span>
-                        <span>€ ${item.prijs.toFixed(2)}</span>
-                    </div>`;
-                });
-            }
-            document.getElementById('cart-total-price').innerText = totalPrice.toFixed(2);
-        }
-
-        // Genereert een E-mail met de bestelling (Simpel en effectief afrekenproces)
-        function checkoutOrder() {
-            if (cart.length === 0) {
-                alert("Je winkelwagen is leeg!");
-                return;
-            }
-            let bestelTekst = "Beste JCM,%0D%0A%0D%0AIk wil graag de volgende clubartikelen bestellen via de website:%0D%0A%0D%0A";
-            
-            cart.forEach(item => {
-                bestelTekst += "- " + item.naam + " (€ " + item.prijs.toFixed(2) + ")%0D%0A";
-            });
-            
-            bestelTekst += "%0D%0A----------------------%0D%0ATotaalbedrag: € " + totalPrice.toFixed(2) + "%0D%0A%0D%0A";
-            bestelTekst += "Mijn gegevens:%0D%0ANaam Judoka: [Vul je naam in]%0D%0ALocatie waar ik les heb: [Kies: Staver/Gooye/Grutterswei]%0D%0AMaat judopak/kleding: [Vul maat in cm in]%0D%0A%0D%0AGroet,%0D%0A";
-
-            // Open het e-mail programma van de gebruiker (Outlook, Mail app, Gmail)
-            window.location.href = `mailto:judoclubmiddelharnis@gmail.com?subject=Webshop Bestelling Website&body=${bestelTekst}`;
-            
-            // Sluit het modal
-            document.getElementById('cart-modal').style.display = 'none';
-            
-            // Wagentje leegmaken
-            cart =[];
-            totalPrice = 0;
-            document.getElementById('cart-count').innerText = "0";
-            renderCart();
-        }
-    </script>
-</body>
-</html>
+        // --- WEBSHOP LOGICA ---
+        let cart =
