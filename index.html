@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judo Club Middelharnis</title>
+    <style>
+        /* ==========================================================
+           KLEUREN & VARIABELEN 
+           Pas de kleuren hieronder aan zodat ze 100% bij het logo passen 
+           ========================================================== */
+        :root {
+            --primary-color: #0b132b; /* Donkerblauw (vervang door jullie donkere logo kleur) */
+            --secondary-color: #1c2541; /* Lichter blauw voor de vlakken */
+            --accent-color: #ff3366; /* Accentkleur (Bijv. Rood of Oranje uit jullie logo) */
+            --text-light: #ffffff;
+            --bg-dark: #050a15;
+            --glass-bg: rgba(28, 37, 65, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --transition-speed: 0.4s;
+        }
+
+        /* Reset & Basis instellingen */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Futuristisch Achtergrond Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 51, 102, 0.08), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(11, 19, 43, 0.8), transparent 40%);
+            z-index: -1;
+        }
+
+        /* --- NAVIGATIE MENU (Glassmorphism) --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: all var(--transition-speed);
+        }
+
+        header.scrolled {
+            padding: 0.8rem 5%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+            position: relative;
+            padding: 5px 0;
+            transition: color var(--transition-speed);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; width: 0; height: 2px;
+            background: var(--accent-color);
+            transition: width var(--transition-speed);
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* --- HERO SECTIE --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(5,10,21,0.7), var(--bg-dark)),
+                        url('https://images.unsplash.com/photo-1564344738521-426b3c9bd6eb?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 25px rgba(255, 51, 102, 0.4);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            color: #ddd;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--accent-color);
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.5);
+            transition: all var(--transition-speed);
+            border: none;
+            cursor: pointer;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 35px var(--accent-color);
+        }
+
+        /* --- ALGEMENE SECTIES & GLAZEN KAARTEN --- */
+        section {
+            padding: 120px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px; height: 4px;
+            background: var(--accent-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 20px rgba(255, 51, 102, 0.2);
+        }
+
+        /* --- OVER ONS --- */
+        .over-ons-content {
+            text-align: center;
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- LOCATIES GRID --- */
+        .locaties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .locatie-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            text-shadow: 0 0 10px rgba(255,51,102,0.3);
+        }
+
+        .locatie-card p {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .locatie-card ul {
+            list-style: none;
+        }
+
+        .locatie-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #ddd;
+        }
+
+        /* --- PROEFLES FORMULIER --- */
+        .proefles-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            outline: none;
+            transition: all var(--transition-speed);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+            background: rgba(255,255,255,0.08);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* --- WEBSHOP --- */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 250px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px rgba(255,51,102,0.4);
+        }
+
+        /* --- FOOTER / CONTACT --- */
+        footer {
+            background: var(--secondary-color);
+            padding: 60px 5%;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .footer-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .footer-info p {
+            color: #ccc;
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+
+        /* --- ANIMATIES --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px;
+            }
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATIE -->
+    <header id="header">
+        <a href="#" class="logo">
+            <!-- Tip: Zet hier een <img> tag met jullie daadwerkelijke logo -->
+            🥋 JC<span>Middelharnis</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#over">Over Ons</a></li>
+                <li><a href="#locaties">Locaties</a></li>
+                <li><a href="#proefles">Proefles</a></li>
+                <li><a href="#webshop">Webshop</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO SECTIE -->
+    <section class="hero">
+        <h1>Judo met plezier</h1>
+        <p>Wil je ook beleven hoe leuk judo kan zijn? Sluit je aan bij de gezelligste vereniging.</p>
+        <a href="#proefles" class="btn">Vraag een proefles aan</a>
+    </section>
+
+    <!-- OVER ONS -->
+    <section id="over">
+        <h2 class="section-title reveal">Over Ons</h2>
+        <div class="glass-card over-ons-content reveal">
+            <p><strong>Judoclub Middelharnis</strong> is een gezellige en open vereniging. We staan voor recreatief en goed judo. We streven ernaar om iedere judoka verder te helpen.</p>
+            <br>
+            <p>Onze lessen zijn vrijblijvend te bezoeken. Heeft u interesse? Bezoek een van onze locaties en ervaar zelf de sfeer op de tatami!</p>
+        </div>
+    </section>
+
+    <!-- LOCATIES -->
+    <section id="locaties">
+        <h2 class="section-title reveal">Onze Locaties & Lestijden</h2>
+        <div class="locaties-grid">
+            <div class="glass-card locatie-card reveal">
+                <h3>De Staver (Maandag)</h3>
+                <p>Olympiaweg 32<br>3245 DL Sommelsdijk</p>
+                <ul>
+                    <li>4 t/m 11 jaar: 17:00 – 18:00 uur</li>
+                    <li>12 t/m 17 jaar: 18:00 – 19:00 uur</li>
+                    <li>Senioren: 19:00 – 20:00 uur</li>
+                </ul>
+            </div>
+            <div class="glass-card locatie-card reveal" style="transition-delay: 0.1s;">
+                <h3>De Gooye (Donderdag)</h3>
+                <p>Hondsgalgweg 1<br>3247 XW Dirksland</p>
+                <ul>
+                    <li>4 t/m 9 jaar: 16:00 – 17:00 uur</li>
+                    <li>10 t/m 16 jaar: 17:00 – 18:00 uur</li>
+                </ul>
+            </div>
+            <div class="glass-card locatie-card reveal" style="transition-delay: 0.2s;">
+                <h3>De Grutterswei (Vrijdag)</h3>
+                <p>Willemstraat 14<br>3255 BS Oude Tonge</p>
+                <ul>
+                    <li>4 t/m 10 jaar: 17:00 – 18:00 uur</li>
+                    <li>11 t/m 17 jaar: 18:00 – 19:00 uur</li>
+                    <li>Senioren: 19:00 – 20:00 uur</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROEFLES -->
+    <section id="proefles">
+        <h2 class="section-title reveal">Proefles Aanvragen</h2>
+        <div class="glass-card proefles-container reveal">
+            <form action="#" method="POST" onsubmit="alert('Aanvraag succesvol verzonden! Wij nemen snel contact op.'); return false;">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Naam (Judoka)" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="E-mailadres" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-control" placeholder="Telefoonnummer">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Je bericht of vragen (Vermeld ook de leeftijd van de judoka)" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Verstuur Aanvraag</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- WEBSHOP -->
+    <section id="webshop">
+        <h2 class="section-title reveal">JCM Webshop</h2>
+        <p style="text-align: center; margin-bottom: 50px; color: #ccc; font-size: 1.2rem;" class="reveal">
+            Koop hier je officiële judopakken, clubkleding en merchandise.
+        </p>
+        
+        <div class="shop-grid">
+            <div class="glass-card product-card reveal">
+                <div class="product-img">🥋</div>
+                <h3 class="product-title">Judopak Kind (Beginner)</h3>
+                <p class="product-price">€ 35,00</p>
+                <button class="btn" onclick="addToCart('Judopak Kind')">In Winkelwagen</button>
+            </div>
+            
+            <div class="glass-card product-card reveal" style="transition-delay: 0.1s;">
+                <div class="product-img">🥋</div>
+                <h3 class="product-title">Judopak Volwassene</h3>
+                <p class="product-price">€ 65,00</p>
+                <button class="btn" onclick="addToCart('Judopak Volwassene')">In Winkelwagen</button>
+            </div>
+            
+            <div class="glass-card product-card reveal" style="transition-delay: 0.2s;">
+                <div class="product-img">👕</div>
+                <h3 class="product-title">JCM Club Hoodie</h3>
+                <p class="product-price">€ 40,00</p>
+                <button class="btn" onclick="addToCart('JCM Club Hoodie')">In Winkelwagen</button>
+            </div>
+            
+            <div class="glass-card product-card reveal" style="transition-delay: 0.3s;">
+                <div class="product-img">🎒</div>
+                <h3 class="product-title">JCM Sporttas</h3>
+                <p class="product-price">€ 25,00</p>
+                <button class="btn" onclick="addToCart('JCM Sporttas')">In Winkelwagen</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer id="contact">
+        <div class="footer-info">
+            <h3>Judo Club Middelharnis</h3>
+            <p>📍 Magdalenadijk 7, 3255 LK Oude-Tonge</p>
+            <p>✉️ judoclubmiddelharnis@gmail.com</p>
+        </div>
+        <p style="margin-top: 40px; font-size: 0.9rem; color: #777;">
+            &copy; 2026 Judoclub Middelharnis. Alle rechten voorbehouden.
+        </p>
+    </footer>
+
+    <!-- JAVASCRIPT VOOR ANIMATIES & WEBSHOP -->
+    <script>
+        // 1. Maakt het menu "Sticky" (kleiner en met schaduw) zodra je naar beneden scrollt
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Futuristisch in-scroll effect (Intersection Observer logica)
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', revealElements);
+        revealElements(); // Check direct bij het laden van de pagina
+
+        // 3. Simpele Webshop Cart Functionaliteit
+        let cartTotal = 0;
+        function addToCart(productNaam) {
+            cartTotal++;
+            alert(`Succes! ${productNaam} is toegevoegd aan de winkelwagen.\n\nJe hebt nu ${cartTotal} item(s) in je wagentje.`);
+        }
+    </script>
+</body>
+</html>
